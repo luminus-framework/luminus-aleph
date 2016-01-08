@@ -1,6 +1,6 @@
-# luminus-jetty
+# luminus-aleph
 
-Jetty HTTP adapter for Luminus
+Aleph HTTP adapter for Luminus
 
 ## License
 
