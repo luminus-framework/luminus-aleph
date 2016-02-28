@@ -5,10 +5,11 @@
 (defn start [{:keys [handler init port] :as opts}]
   (try
     (init)
-    (http/start-server
-      handler
-      (dissoc opts :handler :init))
-    (log/info "server started on port" port)
+    (let [server (http/start-server
+                   handler
+                   (dissoc opts :handler :init))]
+      (log/info "server started on port" port)
+      server)
     (catch Throwable t
       (log/error t (str "server failed to start on port " port)))))
 
