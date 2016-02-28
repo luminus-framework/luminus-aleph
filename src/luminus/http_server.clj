@@ -2,18 +2,16 @@
   (:require [clojure.tools.logging :as log]
             [aleph.http :as http]))
 
-(defn start [{:keys [handler init port] :as opts}]
+(defn start [{:keys [handler port] :as opts}]
   (try
-    (init)
-    (let [server (http/start-server
-                   handler
-                   (dissoc opts :handler :init))]
-      (log/info "server started on port" port)
-      server)
+    (log/info "starting HTTP server on port" port)
+    (http/start-server
+      handler
+      (dissoc opts :handler :init))
     (catch Throwable t
-      (log/error t (str "server failed to start on port " port)))))
+      (log/error t (str "server failed to start on port " port))
+      (throw t))))
 
-(defn stop [server destroy]
-  (destroy)
+(defn stop [server]
   (.close server)
   (log/info "HTTP server stopped"))
