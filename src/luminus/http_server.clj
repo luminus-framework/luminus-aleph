@@ -1,17 +1,13 @@
 (ns luminus.http-server
   (:require [clojure.tools.logging :as log]
-            [aleph.http :as http]
-            [aleph.netty :as netty]))
+            [aleph.http :as http]))
 
 (defn start [{:keys [handler port] :as opts}]
   (try
     (log/info "starting HTTP server on port" port)
-    (let [server (http/start-server
-                   handler
-                   (dissoc opts :handler))]
-      (netty/wait-for-close server)
-      server)
-
+    (http/start-server
+      handler
+      (dissoc opts :handler))
     (catch Throwable t
       (log/error t (str "server failed to start on port " port))
       (throw t))))
