@@ -1,4 +1,4 @@
-(defproject luminus-aleph "0.1.6"
+(defproject luminus-aleph "0.1.7"
   :description "Aleph adapter for Luminus"
   :url "https://github.com/luminus-framework/luminus-aleph"
   :license {:name "Eclipse Public License"
