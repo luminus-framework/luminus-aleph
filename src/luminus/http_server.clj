@@ -1,14 +1,25 @@
 (ns luminus.http-server
   (:require [clojure.tools.logging :as log]
             [aleph.http :as http]
-            [aleph.netty :as netty]))
+            [aleph.netty :as netty]
+            [manifold.deferred :as d]))
 
-(defn start [{:keys [handler port] :as opts}]
+;; from https://www.booleanknot.com/blog/2016/07/15/asynchronous-ring.html
+(defn async-ring->aleph [handler]
+  (fn [request]
+    (let [response (d/deferred)]
+      (handler request #(d/success! response %) #(d/error! response %))
+      response)))
+
+
+(defn start [{:keys [handler port async?] :as opts}]
   (try
     (log/info "starting HTTP server on port" port)
     (let
       [server (http/start-server
-                handler
+                (if async? 
+                  (async-ring->aleph handler)
+                  handler)
                 (dissoc opts :handler))]
       (future (netty/wait-for-close server))
       server)

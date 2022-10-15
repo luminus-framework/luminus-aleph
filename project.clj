@@ -1,8 +1,9 @@
-(defproject luminus-aleph "0.1.7"
+(defproject luminus-aleph "0.2.0-SNAPSHOT"
   :description "Aleph adapter for Luminus"
   :url "https://github.com/luminus-framework/luminus-aleph"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[org.clojure/clojure "1.10.0"]
-                 [org.clojure/tools.logging "0.4.1"]
-                 [aleph "0.4.7"]])
+  :plugins [[lein-ancient "1.0.0-RC3"]]
+  :dependencies [[org.clojure/clojure "1.11.1"]
+                 [org.clojure/tools.logging "1.2.4"]
+                 [aleph "0.5.0"]])
